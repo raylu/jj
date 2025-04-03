@@ -44,6 +44,7 @@ use jj_lib::config::ConfigLayer;
 use jj_lib::config::ConfigSource;
 use jj_lib::config::StackedConfig;
 use jj_lib::git_backend::GitBackend;
+use jj_lib::gitattributes::GitAttributesFile;
 use jj_lib::gitignore::GitIgnoreFile;
 use jj_lib::matchers::EverythingMatcher;
 use jj_lib::merged_tree::MergedTree;
@@ -131,6 +132,7 @@ pub fn user_settings() -> UserSettings {
 pub fn empty_snapshot_options() -> SnapshotOptions<'static> {
     SnapshotOptions {
         base_ignores: GitIgnoreFile::empty(),
+        base_attributes: Arc::new(GitAttributesFile::default()),
         progress: None,
         start_tracking_matcher: &EverythingMatcher,
         max_new_file_size: u64::MAX,

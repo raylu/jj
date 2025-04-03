@@ -29,6 +29,8 @@ use crate::backend::BackendError;
 use crate::backend::MergedTreeId;
 use crate::commit::Commit;
 use crate::dag_walk;
+use crate::gitattributes::GitAttributesError;
+use crate::gitattributes::GitAttributesFile;
 use crate::gitignore::GitIgnoreError;
 use crate::gitignore::GitIgnoreFile;
 use crate::matchers::Matcher;
@@ -192,6 +194,9 @@ pub enum SnapshotError {
     /// Failed to load the working copy state.
     #[error(transparent)]
     WorkingCopyStateError(#[from] WorkingCopyStateError),
+    /// Checking path with gitattributes patterns failed.
+    #[error(transparent)]
+    GitAttributesError(#[from] GitAttributesError),
     /// Some other error happened while snapshotting the working copy.
     #[error("{message}")]
     Other {
@@ -213,6 +218,8 @@ pub struct SnapshotOptions<'a> {
     // because the TreeState may be long-lived if the library is used in a
     // long-lived process.
     pub base_ignores: Arc<GitIgnoreFile>,
+    /// Used for ignoring LFS files - if the setting isn't enabled, this is None
+    pub base_attributes: Arc<GitAttributesFile>,
     /// A callback for the UI to display progress.
     pub progress: Option<&'a SnapshotProgress<'a>>,
     /// For new files that are not already tracked, start tracking them if they

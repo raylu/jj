@@ -196,6 +196,7 @@ mod tests {
         let file = GitIgnoreFile::empty()
             .chain("./dir/", Path::new(""), b"foo\n")
             .unwrap();
+        assert!(file.matches("foo"));
         assert!(file.matches("dir/foo"));
         assert!(file.matches("dir/subdir/foo"));
     }
