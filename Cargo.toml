@@ -91,7 +91,7 @@ rustix = { version = "1.1.2", features = ["fs"] }
 same-file = "1.0.6"
 sapling-renderdag = "0.1.0"
 sapling-streampager = "0.11.0"
-scm-record = "0.8.0"
+scm-record = { git = "https://github.com/arxanas/scm-record", rev = "2b9cd77da382204abffd26748de2fa1fa0413f84" }
 serde = { version = "1.0", features = ["derive", "rc"] }
 serde_json = "1.0.145"
 slab = "0.4.11"
