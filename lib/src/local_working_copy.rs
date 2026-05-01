@@ -1695,7 +1695,7 @@ impl FileSnapshotter<'_> {
                 // omit them in `emit_deleted_files` to avoid that.
                 Ok(None)
             } else if maybe_current_file_state.is_none()
-                && (git_ignore.matches(path.as_internal_file_string())
+                && (git_ignore.matches_file(&path)
                     && !self.force_tracking_matcher.matches(&path))
             {
                 // If it wasn't already tracked and it matches
